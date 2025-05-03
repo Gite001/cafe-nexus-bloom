@@ -1,26 +1,2261 @@
+
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>cafe-nexus-bloom</title>
-    <meta name="description" content="Lovable Generated Project" />
-    <meta name="author" content="Lovable" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Café Nexus</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #00c3ff;
+            --secondary-color: #ff00d4;
+            --background-color: #121212;
+            --text-color: #ffffff;
+            --card-bg: rgba(255, 255, 255, 0.1);
+            --accent-color: #00ffcc;
+            --danger-color: #ff5252;
+            --success-color: #4caf50;
+            --warning-color: #ffc107;
+            --panel-bg: rgba(0, 0, 0, 0.6);
+            --box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            --border-radius: 12px;
+            --transition: all 0.3s ease;
+        }
 
-    <meta property="og:title" content="cafe-nexus-bloom" />
-    <meta property="og:description" content="Lovable Generated Project" />
-    <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+        .light-theme {
+            --primary-color: #2196f3;
+            --secondary-color: #e91e63;
+            --background-color: #f5f5f5;
+            --text-color: #333333;
+            --card-bg: rgba(255, 255, 255, 0.8);
+            --accent-color: #00bcd4;
+            --panel-bg: rgba(255, 255, 255, 0.8);
+            --box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+        }
 
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@lovable_dev" />
-    <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
-  </head>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-  <body>
-    <div id="root"></div>
-    <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS VERY COMMENT! -->
-    <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            transition: var(--transition);
+            overflow-x: hidden;
+            min-height: 100vh;
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiBwYXR0ZXJuVW5pdHM9InVzZXJTcGFjZU9uVXNlIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5UcmFuc2Zvcm09InJvdGF0ZSg0NSkiPjxyZWN0IGlkPSJwYXR0ZXJuLWJnIiB3aWR0aD0iNDAwJSIgaGVpZ2h0PSI0MDAlIiBmaWxsPSJyZ2JhKDAsMCwwLDAuMDIpIi8+PHBhdGggZmlsbD0icmdiYSgwLDE5NSwyNTUsMC4wNSkiIGQ9Ik0gMTAgNSBMIDUgMTAgTCAtNSAyMCBMIC0xMCAxNSBMIC0xNSAxMCBMIC0yMCAwIEwgLTE1IC01IEwgLTEwIC0xMCBMIDAgLTIwIEwgNSAtMTUgTCAxMCAtMTAgWiIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3QgZmlsbD0idXJsKCNwYXR0ZXJuKSIgaGVpZ2h0PSIxMDAlIiB3aWR0aD0iMTAwJSIvPjwvc3ZnPg==');
+            background-attachment: fixed;
+        }
+
+        body.ar {
+            font-family: 'Cairo', sans-serif;
+            direction: rtl;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            gap: 20px;
+            padding: 20px;
+            max-width: 1800px;
+            margin: 0 auto;
+            height: calc(100vh - 70px);
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background-color: var(--panel-bg);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--box-shadow);
+            position: relative;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .cafe-info {
+            text-align: center;
+        }
+
+        .cafe-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.25rem;
+        }
+
+        .date-time {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: var(--border-radius);
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: 500;
+            transition: var(--transition);
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 14px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn:active {
+            transform: translateY(1px);
+        }
+
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0));
+            transition: var(--transition);
+        }
+
+        .btn:active::after {
+            opacity: 0.3;
+        }
+
+        .panel {
+            background-color: var(--panel-bg);
+            backdrop-filter: blur(10px);
+            border-radius: var(--border-radius);
+            padding: 1rem;
+            box-shadow: var(--box-shadow);
+            overflow-y: auto;
+            overflow-x: hidden;
+            height: 100%;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .panel-header {
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 15px;
+            font-weight: 600;
+            color: var(--accent-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .categories {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .category-btn {
+            padding: 0.75rem;
+            border: none;
+            border-radius: var(--border-radius);
+            background-color: rgba(255, 255, 255, 0.05);
+            color: var(--text-color);
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: 500;
+            transition: var(--transition);
+            text-align: left;
+            border-left: 3px solid transparent;
+        }
+
+        .category-btn:hover, .category-btn.active {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-left-color: var(--primary-color);
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 15px;
+            padding: 10px 0;
+        }
+
+        .product-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem;
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            min-height: 180px;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .product-image-container {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-bottom: 10px;
+            border: 2px solid var(--primary-color);
+            position: relative;
+            box-shadow: 0 0 15px var(--primary-color);
+            transition: var(--transition);
+        }
+
+        .product-card:hover .product-image-container {
+            box-shadow: 0 0 25px var(--primary-color);
+        }
+
+        .product-card.adding .product-image-container {
+            animation: pulse-effect 0.5s;
+        }
+
+        @keyframes pulse-effect {
+            0% { transform: scale(1); box-shadow: 0 0 15px var(--primary-color); }
+            50% { transform: scale(1.1); box-shadow: 0 0 25px var(--primary-color); }
+            100% { transform: scale(1); box-shadow: 0 0 15px var(--primary-color); }
+        }
+
+        .product-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+            transform: scale(1.05);
+        }
+
+        .product-card:hover .product-image {
+            transform: scale(1.15);
+        }
+
+        .product-info {
+            text-align: center;
+            width: 100%;
+        }
+
+        .product-name {
+            font-weight: 500;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+        }
+
+        .product-price {
+            background: linear-gradient(45deg, var(--accent-color), var(--primary-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: var(--border-radius);
+            margin-bottom: 10px;
+            transition: var(--transition);
+        }
+
+        .order-item:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .order-item-info {
+            display: flex;
+            align-items: center;
+            flex: 1;
+        }
+
+        .order-item-image {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-right: 10px;
+            object-fit: cover;
+        }
+
+        .order-item-name {
+            margin-right: auto;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 120px;
+        }
+
+        .order-item-quantity {
+            margin: 0 10px;
+            font-weight: bold;
+            padding: 2px 8px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            min-width: 28px;
+            text-align: center;
+        }
+
+        .order-item-price {
+            font-weight: 600;
+            color: var(--accent-color);
+        }
+
+        .order-item-remove {
+            margin-left: 10px;
+            background-color: var(--danger-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .order-item-remove:hover {
+            transform: scale(1.1);
+            background-color: #ff6666;
+        }
+
+        .order-total {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 10px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: auto;
+        }
+
+        .total-label {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .total-amount {
+            font-weight: 700;
+            font-size: 1.2rem;
+            background: linear-gradient(45deg, var(--accent-color), var(--primary-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .btn-confirm {
+            background: linear-gradient(45deg, #4caf50, #009688);
+            flex: 1;
+        }
+
+        .btn-cancel {
+            background: linear-gradient(45deg, #f44336, #e91e63);
+            flex: 1;
+        }
+
+        .btn-admin {
+            background: linear-gradient(45deg, #ff9800, #ff5722);
+        }
+
+        .btn-lang {
+            background: linear-gradient(45deg, #3f51b5, #2196f3);
+        }
+
+        .btn-theme {
+            background: linear-gradient(45deg, #673ab7, #9c27b0);
+        }
+
+        .btn-settings {
+            background: linear-gradient(45deg, #607d8b, #455a64);
+        }
+
+        /* Modal styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            backdrop-filter: blur(5px);
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-container {
+            background-color: var(--panel-bg);
+            width: 90%;
+            max-width: 600px;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            box-shadow: var(--box-shadow);
+            position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.active .modal-container {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            font-weight: 600;
+            font-size: 1.2rem;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .modal-close:hover {
+            color: var(--danger-color);
+            transform: rotate(90deg);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 10px 15px;
+            border-radius: var(--border-radius);
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--text-color);
+            font-family: inherit;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(0, 195, 255, 0.2);
+        }
+
+        .color-picker-wrapper {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .color-option {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 2px solid transparent;
+        }
+
+        .color-option:hover, .color-option.active {
+            transform: scale(1.1);
+            border-color: white;
+        }
+
+        .admin-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 10px;
+        }
+
+        .admin-tab {
+            padding: 8px 15px;
+            cursor: pointer;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .admin-tab:hover, .admin-tab.active {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--accent-color);
+        }
+
+        .admin-content {
+            display: none;
+        }
+
+        .admin-content.active {
+            display: block;
+        }
+
+        /* Table styles for statistics */
+        .stats-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        .stats-table th, .stats-table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .stats-table th {
+            background-color: rgba(255, 255, 255, 0.05);
+            font-weight: 600;
+        }
+
+        .stats-table tr:hover {
+            background-color: rgba(255, 255, 255, 0.03);
+        }
+
+        /* Calculator styles */
+        .calculator {
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            max-width: 300px;
+            margin: 0 auto;
+        }
+
+        .calculator-display {
+            padding: 20px;
+            text-align: right;
+            background-color: rgba(0, 0, 0, 0.5);
+            font-size: 1.5rem;
+            font-family: monospace;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .calculator-keys {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1px;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .calculator-key {
+            padding: 15px;
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.4);
+            border: none;
+            color: var(--text-color);
+            font-family: inherit;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: bold;
+        }
+
+        .calculator-key:hover {
+            background-color: rgba(0, 0, 0, 0.6);
+        }
+
+        .key-operation {
+            background-color: rgba(0, 195, 255, 0.2);
+        }
+
+        .key-operation:hover {
+            background-color: rgba(0, 195, 255, 0.3);
+        }
+
+        .key-equal {
+            background-color: rgba(255, 0, 212, 0.3);
+        }
+
+        .key-equal:hover {
+            background-color: rgba(255, 0, 212, 0.4);
+        }
+
+        /* Product editor */
+        .products-editor {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 15px;
+        }
+
+        .edit-card {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: var(--border-radius);
+            padding: 15px;
+            transition: var(--transition);
+        }
+
+        .edit-card:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .edit-card-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 10px;
+            display: block;
+            border: 2px solid var(--primary-color);
+        }
+
+        .image-upload {
+            display: none;
+        }
+
+        .image-upload-label {
+            display: block;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: rgba(0, 0, 0, 0.3);
+            margin: 0 auto 10px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            border: 2px dashed var(--primary-color);
+        }
+
+        .image-upload-label::before {
+            content: "+";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2rem;
+            color: var(--primary-color);
+        }
+
+        .edit-actions {
+            display: flex;
+            gap: 5px;
+            margin-top: 10px;
+        }
+
+        .btn-sm {
+            padding: 5px 10px;
+            font-size: 0.7rem;
+            flex: 1;
+        }
+
+        .categories-editor {
+            margin-bottom: 20px;
+        }
+
+        .category-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: var(--border-radius);
+            margin-bottom: 10px;
+            transition: var(--transition);
+        }
+
+        .category-item:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .new-item-form {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: var(--border-radius);
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+            margin-bottom: 0;
+        }
+
+        /* Responsive styles */
+        @media (max-width: 1200px) {
+            .container {
+                grid-template-columns: 1fr 2fr;
+            }
+            .panel:nth-child(1) {
+                grid-column: 1;
+            }
+            .panel:nth-child(2) {
+                grid-column: 2;
+            }
+            .panel:nth-child(3) {
+                grid-column: 1 / -1;
+                height: auto;
+                max-height: 300px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto;
+                height: auto;
+                padding: 10px;
+            }
+            .panel {
+                min-height: 300px;
+            }
+            header {
+                flex-direction: column;
+                gap: 10px;
+                padding: 1rem;
+            }
+            .controls {
+                width: 100%;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            .btn {
+                font-size: 0.7rem;
+                padding: 0.4rem 0.8rem;
+            }
+            .modal-container {
+                padding: 15px;
+            }
+        }
+
+        /* Animations */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .float-effect {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        /* Parallax effect */
+        .parallax-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48Y2lyY2xlIGN4PSIxMCIgY3k9IjEwIiByPSIyIiBmaWxsPSJyZ2JhKDAsIDE5NSwgMjU1LCAwLjEpIi8+PGNpcmNsZSBjeD0iMzAiIGN5PSIyMCIgcj0iMSIgZmlsbD0icmdiYSgwLCAxOTUsIDI1NSwgMC4xKSIvPjxjaXJjbGUgY3g9IjUwIiBjeT0iNDAiIHI9IjMiIGZpbGw9InJnYmEoMCwgMTk1LCAyNTUsIDAuMSkiLz48Y2lyY2xlIGN4PSI3MCIgY3k9IjYwIiByPSIxLjUiIGZpbGw9InJnYmEoMCwgMTk1LCAyNTUsIDAuMSkiLz48Y2lyY2xlIGN4PSI5MCIgY3k9IjgwIiByPSIyIiBmaWxsPSJyZ2JhKDAsIDE5NSwgMjU1LCAwLjEpIi8+PC9zdmc+');
+            background-size: 400px 400px;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .confirmation-message {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--success-color);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.3s;
+            z-index: 1000;
+        }
+
+        .confirmation-message.show {
+            opacity: 1;
+            visibility: visible;
+        }
+    </style>
+</head>
+<body>
+    <div class="parallax-bg" id="parallaxBg"></div>
+    
+    <header>
+        <div class="cafe-info">
+            <h1 class="cafe-name" id="cafeName">Café Nexus</h1>
+            <div class="date-time" id="dateTime"></div>
+        </div>
+        <div class="controls">
+            <button class="btn btn-lang" id="langToggle">EN/FR</button>
+            <button class="btn btn-theme" id="themeToggle">☀️</button>
+            <button class="btn btn-settings" id="settingsBtn">⚙️</button>
+            <button class="btn btn-admin" id="adminBtn">👤</button>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="panel" id="categoriesPanel">
+            <div class="panel-header">
+                <span data-lang="en">Categories</span>
+                <span data-lang="fr">Catégories</span>
+            </div>
+            <div class="categories" id="categoriesList">
+                <!-- Categories will be loaded here -->
+            </div>
+        </div>
+        
+        <div class="panel" id="productsPanel">
+            <div class="panel-header">
+                <span data-lang="en">Products</span>
+                <span data-lang="fr">Produits</span>
+            </div>
+            <div class="products-grid" id="productsGrid">
+                <!-- Products will be loaded here -->
+            </div>
+        </div>
+        
+        <div class="panel" id="orderPanel">
+            <div class="panel-header">
+                <span data-lang="en">Current Order</span>
+                <span data-lang="fr">Commande en cours</span>
+            </div>
+            <div id="orderItems">
+                <!-- Order items will be added here -->
+            </div>
+            <div class="order-total">
+                <div class="total-label">
+                    <span data-lang="en">Total:</span>
+                    <span data-lang="fr">Total:</span>
+                </div>
+                <div class="total-amount" id="totalAmount">0 <span id="currencySymbol">MAD</span></div>
+            </div>
+            <div class="action-buttons">
+                <button class="btn btn-confirm" id="confirmBtn">
+                    <span data-lang="en">Confirm</span>
+                    <span data-lang="fr">Confirmer</span>
+                </button>
+                <button class="btn btn-cancel" id="cancelBtn">
+                    <span data-lang="en">Cancel</span>
+                    <span data-lang="fr">Annuler</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div class="modal-overlay" id="settingsModal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <span data-lang="en">Settings</span>
+                    <span data-lang="fr">Paramètres</span>
+                </div>
+                <button class="modal-close" id="settingsCloseBtn">&times;</button>
+            </div>
+            <div class="admin-tabs">
+                <div class="admin-tab active" data-tab="general">
+                    <span data-lang="en">General</span>
+                    <span data-lang="fr">Général</span>
+                </div>
+                <div class="admin-tab" data-tab="appearance">
+                    <span data-lang="en">Appearance</span>
+                    <span data-lang="fr">Apparence</span>
+                </div>
+                <div class="admin-tab" data-tab="security">
+                    <span data-lang="en">Security</span>
+                    <span data-lang="fr">Sécurité</span>
+                </div>
+                <div class="admin-tab" data-tab="reset">
+                    <span data-lang="en">Reset</span>
+                    <span data-lang="fr">Réinitialiser</span>
+                </div>
+            </div>
+
+            <div class="admin-content active" id="generalSettings">
+                <div class="form-group">
+                    <label class="form-label">
+                        <span data-lang="en">Cafe Name (English)</span>
+                        <span data-lang="fr">Nom du Café (Anglais)</span>
+                    </label>
+                    <input type="text" id="cafeNameEn" class="form-input" placeholder="Cafe Name">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">
+                        <span data-lang="en">Cafe Name (Arabic)</span>
+                        <span data-lang="fr">Nom du Café (Arabe)</span>
+                    </label>
+                    <input type="text" id="cafeNameAr" class="form-input" placeholder="اسم المقهى">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">
+                        <span data-lang="en">Currency</span>
+                        <span data-lang="fr">Devise</span>
+                    </label>
+                    <input type="text" id="currencySetting" class="form-input" placeholder="USD, EUR, MAD...">
+                </div>
+                <button class="btn" id="saveGeneralBtn">
+                    <span data-lang="en">Save</span>
+                    <span data-lang="fr">Enregistrer</span>
+                </button>
+            </div>
+
+            <div class="admin-content" id="appearanceSettings">
+                <div class="form-group">
+                    <label class="form-label">
+                        <span data-lang="en">Primary Color</span>
+                        <span data-lang="fr">Couleur Primaire</span>
+                    </label>
+                    <div class="color-picker-wrapper" id="primaryColorPicker">
+                        <div class="color-option active" data-color="#00c3ff" style="background-color: #00c3ff;"></div>
+                        <div class="color-option" data-color="#ff00d4" style="background-color: #ff00d4;"></div>
+                        <div class="color-option" data-color="#00ffcc" style="background-color: #00ffcc;"></div>
+                        <div class="color-option" data-color="#ff9500" style="background-color: #ff9500;"></div>
+                        <div class="color-option" data-color="#7500ff" style="background-color: #7500ff;"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">
+                        <span data-lang="en">Secondary Color</span>
+                        <span data-lang="fr">Couleur Secondaire</span>
+                    </label>
+                    <div class="color-picker-wrapper" id="secondaryColorPicker">
+                        <div class="color-option" data-color="#00c3ff" style="background-color: #00c3ff;"></div>
+                        <div class="color-option active" data-color="#ff00d4" style="background-color: #ff00d4;"></div>
+                        <div class="color-option" data-color="#00ffcc" style="background-color: #00ffcc;"></div>
+                        <div class="color-option" data-color="#ff9500" style="background-color: #ff9500;"></div>
+                        <div class="color-option" data-color="#7500ff" style="background-color: #7500ff;"></div>
+                    </div>
+                </div>
+                <button class="btn" id="saveAppearanceBtn">
+                    <span data-lang="en">Save</span>
+                    <span data-lang="fr">Enregistrer</span>
+                </button>
+            </div>
+
+            <div class="admin-content" id="securitySettings">
+                <div class="form-group">
+                    <label class="form-label">
+                        <span data-lang="en">Admin Password</span>
+                        <span data-lang="fr">Mot de passe administrateur</span>
+                    </label>
+                    <input type="password" id="adminPassword" class="form-input" placeholder="******">
+                </div>
+                <button class="btn" id="saveSecurityBtn">
+                    <span data-lang="en">Save</span>
+                    <span data-lang="fr">Enregistrer</span>
+                </button>
+            </div>
+
+            <div class="admin-content" id="resetSettings">
+                <p>
+                    <span data-lang="en">Resetting will clear all data including products, categories, and settings.</span>
+                    <span data-lang="fr">La réinitialisation effacera toutes les données, y compris les produits, les catégories et les paramètres.</span>
+                </p>
+                <button class="btn btn-cancel" id="resetBtn">
+                    <span data-lang="en">Reset All Data</span>
+                    <span data-lang="fr">Réinitialiser toutes les données</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Modal -->
+    <div class="modal-overlay" id="adminModal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <span data-lang="en">Admin Panel</span>
+                    <span data-lang="fr">Panneau d'administration</span>
+                </div>
+                <button class="modal-close" id="adminCloseBtn">&times;</button>
+            </div>
+            
+            <div id="adminLoginForm">
+                <div class="form-group">
+                    <label class="form-label">
+                        <span data-lang="en">Admin Password</span>
+                        <span data-lang="fr">Mot de passe administrateur</span>
+                    </label>
+                    <input type="password" id="adminLoginPassword" class="form-input" placeholder="******">
+                </div>
+                <button class="btn" id="adminLoginBtn">
+                    <span data-lang="en">Login</span>
+                    <span data-lang="fr">Connexion</span>
+                </button>
+            </div>
+            
+            <div id="adminContent" style="display: none;">
+                <div class="admin-tabs">
+                    <div class="admin-tab active" data-tab="products">
+                        <span data-lang="en">Products</span>
+                        <span data-lang="fr">Produits</span>
+                    </div>
+                    <div class="admin-tab" data-tab="categories">
+                        <span data-lang="en">Categories</span>
+                        <span data-lang="fr">Catégories</span>
+                    </div>
+                    <div class="admin-tab" data-tab="stats">
+                        <span data-lang="en">Statistics</span>
+                        <span data-lang="fr">Statistiques</span>
+                    </div>
+                    <div class="admin-tab" data-tab="calculator">
+                        <span data-lang="en">Calculator</span>
+                        <span data-lang="fr">Calculatrice</span>
+                    </div>
+                </div>
+                
+                <div class="admin-content active" id="productsAdmin">
+                    <div class="new-item-form">
+                        <h3>
+                            <span data-lang="en">Add New Product</span>
+                            <span data-lang="fr">Ajouter un nouveau produit</span>
+                        </h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">
+                                    <span data-lang="en">Name</span>
+                                    <span data-lang="fr">Nom</span>
+                                </label>
+                                <input type="text" id="newProductName" class="form-input" placeholder="Product name">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">
+                                    <span data-lang="en">Price</span>
+                                    <span data-lang="fr">Prix</span>
+                                </label>
+                                <input type="number" id="newProductPrice" class="form-input" min="0" step="0.01" placeholder="0.00">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">
+                                <span data-lang="en">Category</span>
+                                <span data-lang="fr">Catégorie</span>
+                            </label>
+                            <select id="newProductCategory" class="form-input">
+                                <!-- Categories will be loaded here -->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">
+                                <span data-lang="en">Image</span>
+                                <span data-lang="fr">Image</span>
+                            </label>
+                            <label for="newProductImage" class="image-upload-label"></label>
+                            <input type="file" id="newProductImage" class="image-upload" accept="image/*">
+                        </div>
+                        <button class="btn" id="addProductBtn">
+                            <span data-lang="en">Add Product</span>
+                            <span data-lang="fr">Ajouter le produit</span>
+                        </button>
+                    </div>
+                    
+                    <h3>
+                        <span data-lang="en">Manage Products</span>
+                        <span data-lang="fr">Gérer les produits</span>
+                    </h3>
+                    <div class="products-editor" id="productsEditor">
+                        <!-- Products will be loaded here -->
+                    </div>
+                </div>
+                
+                <div class="admin-content" id="categoriesAdmin">
+                    <div class="new-item-form">
+                        <h3>
+                            <span data-lang="en">Add New Category</span>
+                            <span data-lang="fr">Ajouter une nouvelle catégorie</span>
+                        </h3>
+                        <div class="form-group">
+                            <label class="form-label">
+                                <span data-lang="en">Category Name</span>
+                                <span data-lang="fr">Nom de la catégorie</span>
+                            </label>
+                            <input type="text" id="newCategoryName" class="form-input" placeholder="Category name">
+                        </div>
+                        <button class="btn" id="addCategoryBtn">
+                            <span data-lang="en">Add Category</span>
+                            <span data-lang="fr">Ajouter la catégorie</span>
+                        </button>
+                    </div>
+                    
+                    <h3>
+                        <span data-lang="en">Manage Categories</span>
+                        <span data-lang="fr">Gérer les catégories</span>
+                    </h3>
+                    <div class="categories-editor" id="categoriesEditor">
+                        <!-- Categories will be loaded here -->
+                    </div>
+                </div>
+                
+                <div class="admin-content" id="statsAdmin">
+                    <h3>
+                        <span data-lang="en">Daily Statistics</span>
+                        <span data-lang="fr">Statistiques quotidiennes</span>
+                    </h3>
+                    <table class="stats-table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <span data-lang="en">Date</span>
+                                    <span data-lang="fr">Date</span>
+                                </th>
+                                <th>
+                                    <span data-lang="en">Orders</span>
+                                    <span data-lang="fr">Commandes</span>
+                                </th>
+                                <th>
+                                    <span data-lang="en">Total</span>
+                                    <span data-lang="fr">Total</span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody id="dailyStats">
+                            <!-- Daily stats will be loaded here -->
+                        </tbody>
+                    </table>
+                    
+                    <h3>
+                        <span data-lang="en">Monthly Total</span>
+                        <span data-lang="fr">Total mensuel</span>
+                    </h3>
+                    <div class="form-group">
+                        <select id="monthSelector" class="form-input">
+                            <!-- Months will be loaded here -->
+                        </select>
+                    </div>
+                    <div id="monthlyTotal" class="total-amount" style="text-align: center; font-size: 1.5rem; margin: 20px 0;"></div>
+                </div>
+                
+                <div class="admin-content" id="calculatorAdmin">
+                    <div class="calculator">
+                        <div class="calculator-display" id="calculatorDisplay">0</div>
+                        <div class="calculator-keys">
+                            <button class="calculator-key key-clear" data-action="clear">C</button>
+                            <button class="calculator-key" data-action="backspace">⌫</button>
+                            <button class="calculator-key key-operation" data-action="operation">%</button>
+                            <button class="calculator-key key-operation" data-action="operation">/</button>
+                            
+                            <button class="calculator-key" data-digit="7">7</button>
+                            <button class="calculator-key" data-digit="8">8</button>
+                            <button class="calculator-key" data-digit="9">9</button>
+                            <button class="calculator-key key-operation" data-action="operation">*</button>
+                            
+                            <button class="calculator-key" data-digit="4">4</button>
+                            <button class="calculator-key" data-digit="5">5</button>
+                            <button class="calculator-key" data-digit="6">6</button>
+                            <button class="calculator-key key-operation" data-action="operation">-</button>
+                            
+                            <button class="calculator-key" data-digit="1">1</button>
+                            <button class="calculator-key" data-digit="2">2</button>
+                            <button class="calculator-key" data-digit="3">3</button>
+                            <button class="calculator-key key-operation" data-action="operation">+</button>
+                            
+                            <button class="calculator-key" data-digit="0">0</button>
+                            <button class="calculator-key" data-digit=".">.</button>
+                            <button class="calculator-key key-equal" data-action="calculate">=</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation Message -->
+    <div class="confirmation-message" id="confirmationMessage"></div>
+
+    <script>
+        // Global variables
+        let currentLanguage = 'en';
+        let isDarkMode = true;
+        let categories = [];
+        let products = [];
+        let currentOrder = [];
+        let currentCategory = 'all';
+        let stats = {
+            days: {},
+            orders: 0
+        };
+        
+        // DOM elements
+        const parallaxBg = document.getElementById('parallaxBg');
+        const dateTimeElement = document.getElementById('dateTime');
+        const cafeNameElement = document.getElementById('cafeName');
+        const currencySymbolElement = document.getElementById('currencySymbol');
+        const confirmationMessageElement = document.getElementById('confirmationMessage');
+        
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', () => {
+            initApp();
+            
+            // Update date and time
+            updateDateTime();
+            setInterval(updateDateTime, 1000);
+            
+            // Parallax effect on mouse move
+            document.addEventListener('mousemove', handleParallax);
+            
+            // Button event listeners
+            document.getElementById('langToggle').addEventListener('click', toggleLanguage);
+            document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+            document.getElementById('settingsBtn').addEventListener('click', () => openModal('settingsModal'));
+            document.getElementById('adminBtn').addEventListener('click', () => openModal('adminModal'));
+            document.getElementById('settingsCloseBtn').addEventListener('click', () => closeModal('settingsModal'));
+            document.getElementById('adminCloseBtn').addEventListener('click', () => closeModal('adminModal'));
+            document.getElementById('confirmBtn').addEventListener('click', confirmOrder);
+            document.getElementById('cancelBtn').addEventListener('click', cancelOrder);
+            document.getElementById('saveGeneralBtn').addEventListener('click', saveGeneralSettings);
+            document.getElementById('saveAppearanceBtn').addEventListener('click', saveAppearanceSettings);
+            document.getElementById('saveSecurityBtn').addEventListener('click', saveSecuritySettings);
+            document.getElementById('resetBtn').addEventListener('click', resetAllData);
+            document.getElementById('adminLoginBtn').addEventListener('click', adminLogin);
+            document.getElementById('addProductBtn').addEventListener('click', addNewProduct);
+            document.getElementById('addCategoryBtn').addEventListener('click', addNewCategory);
+            
+            // Tab navigation
+            document.querySelectorAll('.admin-tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const tabSection = this.closest('.modal-container').querySelectorAll('.admin-content');
+                    const tabButtons = this.closest('.admin-tabs').querySelectorAll('.admin-tab');
+                    
+                    tabButtons.forEach(button => button.classList.remove('active'));
+                    tabSection.forEach(section => section.classList.remove('active'));
+                    
+                    this.classList.add('active');
+                    const tabId = this.getAttribute('data-tab');
+                    
+                    if (document.getElementById(`${tabId}Settings`)) {
+                        document.getElementById(`${tabId}Settings`).classList.add('active');
+                    } else if (document.getElementById(`${tabId}Admin`)) {
+                        document.getElementById(`${tabId}Admin`).classList.add('active');
+                    }
+                });
+            });
+            
+            // Calculator implementation
+            initCalculator();
+            
+            // Color picker functionality
+            document.querySelectorAll('.color-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const picker = this.closest('.color-picker-wrapper');
+                    picker.querySelectorAll('.color-option').forEach(opt => opt.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+            
+            // Month selector for statistics
+            document.getElementById('monthSelector').addEventListener('change', updateMonthlyStatistics);
+        });
+        
+        // Initialize the application
+        function initApp() {
+            loadFromLocalStorage();
+            renderCategories();
+            renderProducts();
+            updateCurrencyDisplay();
+            populateMonthSelector();
+            updateStatistics();
+        }
+        
+        // Local storage functions
+        function loadFromLocalStorage() {
+            // Load categories
+            const savedCategories = localStorage.getItem('cafe_categories');
+            if (savedCategories) {
+                categories = JSON.parse(savedCategories);
+            } else {
+                // Default category
+                categories = [
+                    {
+                        id: 'all',
+                        name: 'All Products'
+                    }
+                ];
+            }
+            
+            // Load products
+            const savedProducts = localStorage.getItem('cafe_products');
+            if (savedProducts) {
+                products = JSON.parse(savedProducts);
+            }
+            
+            // Load settings
+            const savedSettings = localStorage.getItem('cafe_settings');
+            if (savedSettings) {
+                const settings = JSON.parse(savedSettings);
+                
+                // Apply cafe name
+                if (settings.cafeNameEn) {
+                    document.getElementById('cafeNameEn').value = settings.cafeNameEn;
+                    if (currentLanguage === 'en') {
+                        cafeNameElement.textContent = settings.cafeNameEn;
+                    }
+                }
+                
+                if (settings.cafeNameAr) {
+                    document.getElementById('cafeNameAr').value = settings.cafeNameAr;
+                    if (currentLanguage === 'ar') {
+                        cafeNameElement.textContent = settings.cafeNameAr;
+                    }
+                }
+                
+                // Apply currency
+                if (settings.currency) {
+                    document.getElementById('currencySetting').value = settings.currency;
+                    updateCurrencyDisplay(settings.currency);
+                }
+                
+                // Apply theme mode
+                if (settings.isDarkMode !== undefined) {
+                    isDarkMode = settings.isDarkMode;
+                    applyTheme();
+                }
+                
+                // Apply colors
+                if (settings.primaryColor) {
+                    document.documentElement.style.setProperty('--primary-color', settings.primaryColor);
+                    document.querySelector(`#primaryColorPicker .color-option[data-color="${settings.primaryColor}"]`)?.classList.add('active');
+                }
+                
+                if (settings.secondaryColor) {
+                    document.documentElement.style.setProperty('--secondary-color', settings.secondaryColor);
+                    document.querySelector(`#secondaryColorPicker .color-option[data-color="${settings.secondaryColor}"]`)?.classList.add('active');
+                }
+                
+                // Apply language
+                if (settings.language) {
+                    currentLanguage = settings.language;
+                    applyLanguage();
+                }
+                
+                // Apply admin password
+                if (settings.adminPassword) {
+                    document.getElementById('adminPassword').value = settings.adminPassword;
+                }
+            }
+            
+            // Load statistics
+            const savedStats = localStorage.getItem('cafe_stats');
+            if (savedStats) {
+                stats = JSON.parse(savedStats);
+            }
+        }
+        
+        function saveToLocalStorage() {
+            localStorage.setItem('cafe_categories', JSON.stringify(categories));
+            localStorage.setItem('cafe_products', JSON.stringify(products));
+            localStorage.setItem('cafe_stats', JSON.stringify(stats));
+            
+            // Save settings
+            const settings = {
+                cafeNameEn: document.getElementById('cafeNameEn').value,
+                cafeNameAr: document.getElementById('cafeNameAr').value,
+                currency: document.getElementById('currencySetting').value,
+                isDarkMode: isDarkMode,
+                primaryColor: document.querySelector('#primaryColorPicker .color-option.active').getAttribute('data-color'),
+                secondaryColor: document.querySelector('#secondaryColorPicker .color-option.active').getAttribute('data-color'),
+                language: currentLanguage,
+                adminPassword: document.getElementById('adminPassword').value
+            };
+            
+            localStorage.setItem('cafe_settings', JSON.stringify(settings));
+        }
+        
+        // Update date and time
+        function updateDateTime() {
+            const now = new Date();
+            const options = { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            };
+            
+            dateTimeElement.textContent = now.toLocaleDateString(
+                currentLanguage === 'fr' ? 'fr-FR' : 'en-US', 
+                options
+            );
+        }
+        
+        // Handle parallax effect
+        function handleParallax(e) {
+            const xAxis = (window.innerWidth / 2 - e.pageX) / 60;
+            const yAxis = (window.innerHeight / 2 - e.pageY) / 60;
+            parallaxBg.style.transform = `translate(${xAxis}px, ${yAxis}px)`;
+        }
+        
+        // Toggle language
+        function toggleLanguage() {
+            currentLanguage = currentLanguage === 'en' ? 'fr' : 'en';
+            applyLanguage();
+            saveToLocalStorage();
+        }
+        
+        function applyLanguage() {
+            document.querySelectorAll('[data-lang]').forEach(el => {
+                const isCurrentLang = el.getAttribute('data-lang') === currentLanguage;
+                el.style.display = isCurrentLang ? '' : 'none';
+            });
+            
+            // Update cafe name based on language
+            if (currentLanguage === 'en') {
+                cafeNameElement.textContent = document.getElementById('cafeNameEn').value || 'Café Nexus';
+            } else {
+                cafeNameElement.textContent = document.getElementById('cafeNameAr').value || 'مقهى نيكسوس';
+            }
+            
+            // Update placeholder text
+            updatePlaceholders();
+            
+            // Update date and time
+            updateDateTime();
+        }
+        
+        function updatePlaceholders() {
+            const placeholders = {
+                en: {
+                    cafeNameEn: 'Cafe Name',
+                    cafeNameAr: 'Cafe Name (Arabic)',
+                    currencySetting: 'USD, EUR, MAD...',
+                    newProductName: 'Product name',
+                    newProductPrice: '0.00',
+                    newCategoryName: 'Category name',
+                    adminPassword: '******',
+                    adminLoginPassword: '******'
+                },
+                fr: {
+                    cafeNameEn: 'Nom du café',
+                    cafeNameAr: 'Nom du café (Arabe)',
+                    currencySetting: 'USD, EUR, MAD...',
+                    newProductName: 'Nom du produit',
+                    newProductPrice: '0.00',
+                    newCategoryName: 'Nom de la catégorie',
+                    adminPassword: '******',
+                    adminLoginPassword: '******'
+                }
+            };
+            
+            Object.keys(placeholders[currentLanguage]).forEach(id => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.placeholder = placeholders[currentLanguage][id];
+                }
+            });
+        }
+        
+        // Toggle theme
+        function toggleTheme() {
+            isDarkMode = !isDarkMode;
+            applyTheme();
+            saveToLocalStorage();
+        }
+        
+        function applyTheme() {
+            if (isDarkMode) {
+                document.body.classList.remove('light-theme');
+                document.getElementById('themeToggle').textContent = '☀️';
+            } else {
+                document.body.classList.add('light-theme');
+                document.getElementById('themeToggle').textContent = '🌙';
+            }
+        }
+        
+        // Modal functions
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
+        }
+        
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+        
+        // Render categories
+        function renderCategories() {
+            const categoriesList = document.getElementById('categoriesList');
+            const newProductCategory = document.getElementById('newProductCategory');
+            
+            categoriesList.innerHTML = '';
+            newProductCategory.innerHTML = '';
+            
+            categories.forEach(category => {
+                // Create category button for the sidebar
+                const categoryButton = document.createElement('button');
+                categoryButton.className = `category-btn ${currentCategory === category.id ? 'active' : ''}`;
+                categoryButton.textContent = category.name;
+                categoryButton.dataset.id = category.id;
+                categoryButton.addEventListener('click', () => {
+                    currentCategory = category.id;
+                    document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
+                    categoryButton.classList.add('active');
+                    renderProducts();
+                });
+                categoriesList.appendChild(categoryButton);
+                
+                // Add category to the dropdown in admin panel
+                const option = document.createElement('option');
+                option.value = category.id;
+                option.textContent = category.name;
+                newProductCategory.appendChild(option);
+            });
+            
+            // Render categories in admin panel
+            renderCategoriesAdmin();
+        }
+        
+        // Render categories in admin panel
+        function renderCategoriesAdmin() {
+            const categoriesEditor = document.getElementById('categoriesEditor');
+            categoriesEditor.innerHTML = '';
+            
+            categories.forEach(category => {
+                if (category.id === 'all') return; // Skip the default "All Products" category
+                
+                const categoryItem = document.createElement('div');
+                categoryItem.className = 'category-item';
+                categoryItem.innerHTML = `
+                    <div>${category.name}</div>
+                    <div class="edit-actions">
+                        <button class="btn btn-cancel btn-sm" data-id="${category.id}">
+                            <span data-lang="en">Delete</span>
+                            <span data-lang="fr">Supprimer</span>
+                        </button>
+                    </div>
+                `;
+                
+                // Add delete event listener
+                categoryItem.querySelector('.btn-cancel').addEventListener('click', () => deleteCategory(category.id));
+                
+                categoriesEditor.appendChild(categoryItem);
+            });
+            
+            // Apply language
+            applyLanguage();
+        }
+        
+        // Render products
+        function renderProducts() {
+            const productsGrid = document.getElementById('productsGrid');
+            productsGrid.innerHTML = '';
+            
+            // Filter products by category
+            let filteredProducts = products;
+            if (currentCategory !== 'all') {
+                filteredProducts = products.filter(product => product.categoryId === currentCategory);
+            }
+            
+            filteredProducts.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                productCard.dataset.id = product.id;
+                productCard.innerHTML = `
+                    <div class="product-image-container">
+                        <img src="${product.image}" alt="${product.name}" class="product-image">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">${product.name}</div>
+                        <div class="product-price">${product.price} ${currencySymbolElement.textContent}</div>
+                    </div>
+                `;
+                
+                // Add click event to add product to order
+                productCard.addEventListener('click', () => addToOrder(product));
+                
+                productsGrid.appendChild(productCard);
+            });
+            
+            // Render products in admin panel
+            renderProductsAdmin();
+        }
+        
+        // Render products in admin panel
+        function renderProductsAdmin() {
+            const productsEditor = document.getElementById('productsEditor');
+            productsEditor.innerHTML = '';
+            
+            products.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'edit-card';
+                productCard.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}" class="edit-card-image">
+                    <div class="product-info">
+                        <div class="product-name">${product.name}</div>
+                        <div class="product-price">${product.price} ${currencySymbolElement.textContent}</div>
+                    </div>
+                    <div class="edit-actions">
+                        <button class="btn btn-cancel btn-sm" data-id="${product.id}">
+                            <span data-lang="en">Delete</span>
+                            <span data-lang="fr">Supprimer</span>
+                        </button>
+                    </div>
+                `;
+                
+                // Add delete event listener
+                productCard.querySelector('.btn-cancel').addEventListener('click', () => deleteProduct(product.id));
+                
+                productsEditor.appendChild(productCard);
+            });
+            
+            // Apply language
+            applyLanguage();
+        }
+        
+        // Add product to order
+        function addToOrder(product) {
+            const existingItem = currentOrder.find(item => item.id === product.id);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+                existingItem.totalPrice = existingItem.price * existingItem.quantity;
+            } else {
+                currentOrder.push({
+                    id: product.id,
+                    name: product.name,
+                    price: product.price,
+                    quantity: 1,
+                    totalPrice: product.price,
+                    image: product.image
+                });
+            }
+            
+            // Add pulse effect
+            const productCard = document.querySelector(`.product-card[data-id="${product.id}"]`);
+            productCard.classList.add('adding');
+            setTimeout(() => productCard.classList.remove('adding'), 500);
+            
+            renderOrder();
+        }
+        
+        // Render current order
+        function renderOrder() {
+            const orderItemsContainer = document.getElementById('orderItems');
+            orderItemsContainer.innerHTML = '';
+            
+            let total = 0;
+            
+            currentOrder.forEach(item => {
+                const orderItem = document.createElement('div');
+                orderItem.className = 'order-item';
+                orderItem.innerHTML = `
+                    <div class="order-item-info">
+                        <img src="${item.image}" alt="${item.name}" class="order-item-image">
+                        <div class="order-item-name">${item.name}</div>
+                        <div class="order-item-quantity">x${item.quantity}</div>
+                        <div class="order-item-price">${item.totalPrice.toFixed(2)} ${currencySymbolElement.textContent}</div>
+                    </div>
+                    <button class="order-item-remove" data-id="${item.id}">&times;</button>
+                `;
+                
+                // Add remove item event
+                orderItem.querySelector('.order-item-remove').addEventListener('click', () => removeFromOrder(item.id));
+                
+                orderItemsContainer.appendChild(orderItem);
+                total += item.totalPrice;
+            });
+            
+            // Update total
+            document.getElementById('totalAmount').textContent = `${total.toFixed(2)} ${currencySymbolElement.textContent}`;
+        }
+        
+        // Remove from order
+        function removeFromOrder(id) {
+            const index = currentOrder.findIndex(item => item.id === id);
+            
+            if (index !== -1) {
+                if (currentOrder[index].quantity > 1) {
+                    currentOrder[index].quantity -= 1;
+                    currentOrder[index].totalPrice = currentOrder[index].price * currentOrder[index].quantity;
+                } else {
+                    currentOrder.splice(index, 1);
+                }
+                renderOrder();
+            }
+        }
+        
+        // Confirm order
+        function confirmOrder() {
+            if (currentOrder.length === 0) {
+                showConfirmationMessage(
+                    currentLanguage === 'en' ? 'No items in order' : 'Aucun article dans la commande',
+                    false
+                );
+                return;
+            }
+            
+            // Calculate total
+            const total = currentOrder.reduce((sum, item) => sum + item.totalPrice, 0);
+            
+            // Add to statistics
+            addOrderToStats(total);
+            
+            // Show confirmation
+            showConfirmationMessage(
+                currentLanguage === 'en' ? 'Order confirmed!' : 'Commande confirmée !',
+                true
+            );
+            
+            // Clear order
+            currentOrder = [];
+            renderOrder();
+            updateStatistics();
+        }
+        
+        // Cancel order
+        function cancelOrder() {
+            if (currentOrder.length === 0) {
+                showConfirmationMessage(
+                    currentLanguage === 'en' ? 'No items in order' : 'Aucun article dans la commande',
+                    false
+                );
+                return;
+            }
+            
+            currentOrder = [];
+            renderOrder();
+            
+            showConfirmationMessage(
+                currentLanguage === 'en' ? 'Order cancelled' : 'Commande annulée',
+                false
+            );
+        }
+        
+        // Add order to statistics
+        function addOrderToStats(total) {
+            const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD format
+            
+            if (!stats.days[today]) {
+                stats.days[today] = {
+                    orders: 0,
+                    total: 0
+                };
+            }
+            
+            stats.days[today].orders += 1;
+            stats.days[today].total += total;
+            stats.orders += 1;
+            
+            saveToLocalStorage();
+        }
+        
+        // Update statistics display
+        function updateStatistics() {
+            const dailyStats = document.getElementById('dailyStats');
+            dailyStats.innerHTML = '';
+            
+            // Sort days in descending order (newest first)
+            const sortedDays = Object.entries(stats.days).sort((a, b) => new Date(b[0]) - new Date(a[0]));
+            
+            sortedDays.forEach(([date, data]) => {
+                const row = document.createElement('tr');
+                const formattedDate = new Date(date).toLocaleDateString(
+                    currentLanguage === 'fr' ? 'fr-FR' : 'en-US'
+                );
+                
+                row.innerHTML = `
+                    <td>${formattedDate}</td>
+                    <td>${data.orders}</td>
+                    <td>${data.total.toFixed(2)} ${currencySymbolElement.textContent}</td>
+                `;
+                
+                dailyStats.appendChild(row);
+            });
+            
+            updateMonthlyStatistics();
+        }
+        
+        // Update monthly statistics
+        function updateMonthlyStatistics() {
+            const monthSelector = document.getElementById('monthSelector');
+            const selectedMonth = monthSelector.value;
+            const monthlyTotalElement = document.getElementById('monthlyTotal');
+            
+            let monthlyTotal = 0;
+            
+            Object.entries(stats.days).forEach(([date, data]) => {
+                const monthYear = date.substring(0, 7); // YYYY-MM format
+                
+                if (monthYear === selectedMonth) {
+                    monthlyTotal += data.total;
+                }
+            });
+            
+            monthlyTotalElement.textContent = `${monthlyTotal.toFixed(2)} ${currencySymbolElement.textContent}`;
+        }
+        
+        // Populate month selector
+        function populateMonthSelector() {
+            const monthSelector = document.getElementById('monthSelector');
+            monthSelector.innerHTML = '';
+            
+            // Get unique months from stats
+            const months = new Set();
+            
+            Object.keys(stats.days).forEach(date => {
+                const monthYear = date.substring(0, 7); // YYYY-MM format
+                months.add(monthYear);
+            });
+            
+            // If no stats yet, add current month
+            if (months.size === 0) {
+                const now = new Date();
+                const year = now.getFullYear();
+                const month = (now.getMonth() + 1).toString().padStart(2, '0');
+                months.add(`${year}-${month}`);
+            }
+            
+            // Sort months in descending order
+            const sortedMonths = Array.from(months).sort().reverse();
+            
+            sortedMonths.forEach(monthYear => {
+                const [year, month] = monthYear.split('-');
+                const date = new Date(parseInt(year), parseInt(month) - 1, 1);
+                
+                const monthName = date.toLocaleString(
+                    currentLanguage === 'fr' ? 'fr-FR' : 'en-US', 
+                    { month: 'long' }
+                );
+                
+                const option = document.createElement('option');
+                option.value = monthYear;
+                option.textContent = `${monthName} ${year}`;
+                monthSelector.appendChild(option);
+            });
+        }
+        
+        // Save general settings
+        function saveGeneralSettings() {
+            const cafeNameEn = document.getElementById('cafeNameEn').value;
+            const cafeNameAr = document.getElementById('cafeNameAr').value;
+            const currency = document.getElementById('currencySetting').value;
+            
+            if (currentLanguage === 'en') {
+                cafeNameElement.textContent = cafeNameEn;
+            } else {
+                cafeNameElement.textContent = cafeNameAr;
+            }
+            
+            updateCurrencyDisplay(currency);
+            saveToLocalStorage();
+            closeModal('settingsModal');
+            
+            showConfirmationMessage(
+                currentLanguage === 'en' ? 'Settings saved' : 'Paramètres enregistrés',
+                true
+            );
+        }
+        
+        // Save appearance settings
+        function saveAppearanceSettings() {
+            const primaryColor = document.querySelector('#primaryColorPicker .color-option.active').getAttribute('data-color');
+            const secondaryColor = document.querySelector('#secondaryColorPicker .color-option.active').getAttribute('data-color');
+            
+            document.documentElement.style.setProperty('--primary-color', primaryColor);
+            document.documentElement.style.setProperty('--secondary-color', secondaryColor);
+            
+            saveToLocalStorage();
+            closeModal('settingsModal');
+            
+            showConfirmationMessage(
+                currentLanguage === 'en' ? 'Appearance updated' : 'Apparence mise à jour',
+                true
+            );
+        }
+        
+        // Save security settings
+        function saveSecuritySettings() {
+            saveToLocalStorage();
+            closeModal('settingsModal');
+            
+            showConfirmationMessage(
+                currentLanguage === 'en' ? 'Security settings saved' : 'Paramètres de sécurité enregistrés',
+                true
+            );
+        }
+        
+        // Reset all data
+        function resetAllData() {
+            if (confirm(currentLanguage === 'en' ? 
+                'This will delete all data. Are you sure?' : 
+                'Cela supprimera toutes les données. Êtes-vous sûr ?')) {
+                
+                localStorage.removeItem('cafe_categories');
+                localStorage.removeItem('cafe_products');
+                localStorage.removeItem('cafe_stats');
+                localStorage.removeItem('cafe_settings');
+                
+                showConfirmationMessage(
+                    currentLanguage === 'en' ? 'All data has been reset' : 'Toutes les données ont été réinitialisées',
+                    true
+                );
+                
+                setTimeout(() => {
+                    location.reload();
+                }, 1500);
+            }
+        }
+        
+        // Admin login
+        function adminLogin() {
+            const enteredPassword = document.getElementById('adminLoginPassword').value;
+            const savedPassword = document.getElementById('adminPassword').value || '1234';
+            
+            if (enteredPassword === savedPassword) {
+                document.getElementById('adminLoginForm').style.display = 'none';
+                document.getElementById('adminContent').style.display = 'block';
+                document.getElementById('adminLoginPassword').value = '';
+            } else {
+                showConfirmationMessage(
+                    currentLanguage === 'en' ? 'Incorrect password' : 'Mot de passe incorrect',
+                    false
+                );
+            }
+        }
+        
+        // Add new product
+        function addNewProduct() {
+            const name = document.getElementById('newProductName').value;
+            const price = parseFloat(document.getElementById('newProductPrice').value);
+            const categoryId = document.getElementById('newProductCategory').value;
+            const imageInput = document.getElementById('newProductImage');
+            
+            if (!name || isNaN(price) || !categoryId) {
+                showConfirmationMessage(
+                    currentLanguage === 'en' ? 'Please fill all fields' : 'Veuillez remplir tous les champs',
+                    false
+                );
+                return;
+            }
+            
+            if (!imageInput.files || !imageInput.files[0]) {
+                showConfirmationMessage(
+                    currentLanguage === 'en' ? 'Please select an image' : 'Veuillez sélectionner une image',
+                    false
+                );
+                return;
+            }
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const newProduct = {
+                    id: 'product_' + Date.now(),
+                    name: name,
+                    price: price,
+                    categoryId: categoryId,
+                    image: e.target.result
+                };
+                
+                products.push(newProduct);
+                saveToLocalStorage();
+                renderProducts();
+                
+                // Clear form
+                document.getElementById('newProductName').value = '';
+                document.getElementById('newProductPrice').value = '';
+                document.getElementById('newProductImage').value = '';
+                
+                showConfirmationMessage(
+                    currentLanguage === 'en' ? 'Product added' : 'Produit ajouté',
+                    true
+                );
+            };
+            
+            reader.readAsDataURL(imageInput.files[0]);
+        }
+        
+        // Delete product
+        function deleteProduct(id) {
+            if (confirm(currentLanguage === 'en' ? 
+                'Are you sure you want to delete this product?' : 
+                'Êtes-vous sûr de vouloir supprimer ce produit ?')) {
+                
+                products = products.filter(product => product.id !== id);
+                saveToLocalStorage();
+                renderProducts();
+                
+                showConfirmationMessage(
+                    currentLanguage === 'en' ? 'Product deleted' : 'Produit supprimé',
+                    true
+                );
+            }
+        }
+        
+        // Add new category
+        function addNewCategory() {
+            const name = document.getElementById('newCategoryName').value;
+            
+            if (!name) {
+                showConfirmationMessage(
+                    currentLanguage === 'en' ? 'Please enter a category name' : 'Veuillez entrer un nom de catégorie',
+                    false
+                );
+                return;
+            }
+            
+            const newCategory = {
+                id: 'category_' + Date.now(),
+                name: name
+            };
+            
+            categories.push(newCategory);
+            saveToLocalStorage();
+            renderCategories();
+            
+            // Clear form
+            document.getElementById('newCategoryName').value = '';
+            
+            showConfirmationMessage(
+                currentLanguage === 'en' ? 'Category added' : 'Catégorie ajoutée',
+                true
+            );
+        }
+        
+        // Delete category
+        function deleteCategory(id) {
+            if (confirm(currentLanguage === 'en' ? 
+                'Are you sure you want to delete this category? Products in this category will be moved to "All Products".' : 
+                'Êtes-vous sûr de vouloir supprimer cette catégorie ? Les produits de cette catégorie seront déplacés vers "Tous les produits".')) {
+                
+                // Move products to "All Products" category
+                products.forEach(product => {
+                    if (product.categoryId === id) {
+                        product.categoryId = 'all';
+                    }
+                });
+                
+                // Remove category
+                categories = categories.filter(category => category.id !== id);
+                
+                saveToLocalStorage();
+                renderCategories();
+                
+                showConfirmationMessage(
+                    currentLanguage === 'en' ? 'Category deleted' : 'Catégorie supprimée',
+                    true
+                );
+            }
+        }
+        
+        // Update currency display
+        function updateCurrencyDisplay(currency) {
+            const currencyValue = currency || document.getElementById('currencySetting').value || 'MAD';
+            currencySymbolElement.textContent = currencyValue;
+            renderOrder();
+            renderProducts();
+        }
+        
+        // Show confirmation message
+        function showConfirmationMessage(message, isSuccess) {
+            confirmationMessageElement.textContent = message;
+            confirmationMessageElement.style.backgroundColor = isSuccess ? 
+                'var(--success-color)' : 'var(--danger-color)';
+            
+            confirmationMessageElement.classList.add('show');
+            
+            setTimeout(() => {
+                confirmationMessageElement.classList.remove('show');
+            }, 3000);
+        }
+        
+        // Calculator functionality
+        function initCalculator() {
+            const display = document.getElementById('calculatorDisplay');
+            let currentInput = '0';
+            let firstOperand = null;
+            let operator = null;
+            let waitingForSecondOperand = false;
+            
+            document.querySelectorAll('.calculator-key').forEach(key => {
+                key.addEventListener('click', function() {
+                    if (this.hasAttribute('data-digit')) {
+                        inputDigit(this.getAttribute('data-digit'));
+                    } else if (this.hasAttribute('data-action')) {
+                        const action = this.getAttribute('data-action');
+                        
+                        switch(action) {
+                            case 'clear':
+                                clear();
+                                break;
+                            case 'backspace':
+                                backspace();
+                                break;
+                            case 'operation':
+                                handleOperator(this.textContent);
+                                break;
+                            case 'calculate':
+                                calculate();
+                                break;
+                        }
+                    }
+                    
+                    updateDisplay();
+                });
+            });
+            
+            function inputDigit(digit) {
+                if (waitingForSecondOperand) {
+                    currentInput = digit;
+                    waitingForSecondOperand = false;
+                } else {
+                    currentInput = currentInput === '0' ? digit : currentInput + digit;
+                }
+            }
+            
+            function handleOperator(nextOperator) {
+                const inputValue = parseFloat(currentInput);
+                
+                if (operator && waitingForSecondOperand) {
+                    operator = nextOperator;
+                    return;
+                }
+                
+                if (firstOperand === null) {
+                    firstOperand = inputValue;
+                } else if (operator) {
+                    const result = calculate();
+                    currentInput = String(result);
+                    firstOperand = result;
+                }
+                
+                waitingForSecondOperand = true;
+                operator = nextOperator;
+            }
+            
+            function calculate() {
+                const inputValue = parseFloat(currentInput);
+                
+                if (firstOperand === null || operator === null) {
+                    return inputValue;
+                }
+                
+                let result;
+                switch (operator) {
+                    case '+':
+                        result = firstOperand + inputValue;
+                        break;
+                    case '-':
+                        result = firstOperand - inputValue;
+                        break;
+                    case '*':
+                        result = firstOperand * inputValue;
+                        break;
+                    case '/':
+                        result = firstOperand / inputValue;
+                        break;
+                    case '%':
+                        result = firstOperand % inputValue;
+                        break;
+                    default:
+                        return inputValue;
+                }
+                
+                // Reset state
+                operator = null;
+                firstOperand = null;
+                waitingForSecondOperand = false;
+                currentInput = String(result);
+                
+                return result;
+            }
+            
+            function clear() {
+                currentInput = '0';
+                firstOperand = null;
+                operator = null;
+                waitingForSecondOperand = false;
+            }
+            
+            function backspace() {
+                if (currentInput.length === 1 || (currentInput.length === 2 && currentInput.startsWith('-'))) {
+                    currentInput = '0';
+                } else {
+                    currentInput = currentInput.substring(0, currentInput.length - 1);
+                }
+            }
+            
+            function updateDisplay() {
+                display.textContent = currentInput;
+            }
+        }
+    </script>
+</body>
 </html>
