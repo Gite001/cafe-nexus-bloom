@@ -7,7 +7,7 @@ import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTr
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { CategoryType, ProductType, LanguageType } from "@/types/cafeTypes";
 import { useToast } from "@/components/ui/use-toast";
-import { Settings, Upload, Plus, Trash, Edit } from "lucide-react";
+import { Settings, Upload, Plus, Trash, Edit, X } from "lucide-react"; // Added the X icon import here
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
